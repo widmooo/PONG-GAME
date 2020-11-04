@@ -9,9 +9,10 @@ import winsound
 
 wn = turtle.Screen()
 wn.title("Pong Game v1.0 (by widmooo)")
-wn.bgcolor("White")
+wn.bgcolor("Black")
 wn.setup(width=800, height=600)
 wn.tracer(0)  # make game moves faster
+
 
 # Score
 score_a = 0
@@ -21,7 +22,7 @@ score_b = 0
 player_a = turtle.Turtle()
 player_a.speed(0)
 player_a.shape("square")
-player_a.color("Black")
+player_a.color("White")
 player_a.shapesize(stretch_wid=6, stretch_len=1)
 player_a.penup()
 player_a.goto(-360, 0)
@@ -30,7 +31,7 @@ player_a.goto(-360, 0)
 player_b = turtle.Turtle()
 player_b.speed(0)
 player_b.shape("square")
-player_b.color("Black")
+player_b.color("White")
 player_b.shapesize(stretch_wid=6, stretch_len=1)
 player_b.penup()
 player_b.goto(360, 0)
@@ -39,7 +40,7 @@ player_b.goto(360, 0)
 ball = turtle.Turtle()
 ball.speed(0)
 ball.shape("circle")
-ball.color("#690C0C")
+ball.color("White")
 ball.penup()
 ball.goto(0, 0)
 
@@ -49,7 +50,7 @@ ball.dy = 0.2  # speed and direction Y
 # Score Menu
 score_m = turtle.Turtle()
 score_m.speed(0)
-score_m.color("Black")
+score_m.color("White")
 score_m.penup()
 score_m.hideturtle()
 score_m.goto(0, 250)
@@ -116,6 +117,7 @@ while True:
         score_m.clear()
         score_m.write("Player A: {}   Player B: {}".format(score_a, score_b), align="center",
                       font=("Arial", 15, "normal"))
+        winsound.PlaySound("point.wav", winsound.SND_ASYNC)
 
     if ball.xcor() < -390:
         ball.goto(0, 0)
@@ -124,6 +126,7 @@ while True:
         score_m.clear()
         score_m.write("Player A: {}   Player B: {}".format(score_a, score_b), align="center",
                       font=("Arial", 15, "normal"))
+        winsound.PlaySound("point.wav", winsound.SND_ASYNC)
 
     # Ball colisions
     if (ball.xcor() > 340 and ball.xcor() < 360) and (ball.ycor() < player_b.ycor() + 50 and ball.ycor() > player_b.ycor() - 50):

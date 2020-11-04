@@ -109,7 +109,7 @@ while True:
     if ball.xcor() > 390:
         ball.goto(0, 0)
         ball.dx *= -1
-        score_a = + 1
+        score_a += 1
         score_m.clear()
         score_m.write("Player A: {}   Player B: {}".format(score_a, score_b), align="center",
                       font=("Arial", 15, "normal"))

@@ -6,10 +6,11 @@
 # Main
 import turtle
 import winsound
+import time
 
 wn = turtle.Screen()
 wn.title("Pong Game v1.0 (by widmooo)")
-wn.bgcolor("Black")
+wn.bgpic('bcg.gif')
 wn.setup(width=800, height=600)
 wn.tracer(0)  # make game moves faster
 
@@ -18,11 +19,15 @@ wn.tracer(0)  # make game moves faster
 score_a = 0
 score_b = 0
 
+# Set Score
+set_a = 0
+set_b = 0
+
 # Player A
 player_a = turtle.Turtle()
 player_a.speed(0)
 player_a.shape("square")
-player_a.color("White")
+player_a.color("#ca3b32")
 player_a.shapesize(stretch_wid=6, stretch_len=1)
 player_a.penup()
 player_a.goto(-360, 0)
@@ -31,7 +36,7 @@ player_a.goto(-360, 0)
 player_b = turtle.Turtle()
 player_b.speed(0)
 player_b.shape("square")
-player_b.color("White")
+player_b.color("#38393b")
 player_b.shapesize(stretch_wid=6, stretch_len=1)
 player_b.penup()
 player_b.goto(360, 0)
@@ -54,8 +59,29 @@ score_m.color("White")
 score_m.penup()
 score_m.hideturtle()
 score_m.goto(0, 250)
-score_m.write("Player A: 0   Player B: 0", align="center",
-              font=("Arial", 15, "normal"))
+score_m.write("0    0", align="center",
+              font=("Arial", 20, "normal"))
+
+# Winner A
+winner_a = turtle.Turtle()
+winner_a.speed(0)
+winner_a.color("#ca3b32")
+winner_a.penup()
+winner_a.hideturtle()
+winner_a.goto(-200, 0)
+winner_a.write("    ", align="center",
+               font=("Arial", 40, "bold"))
+
+# Winner B
+winner_b = turtle.Turtle()
+winner_b.speed(0)
+winner_b.color("#38393b")
+winner_b.penup()
+winner_b.hideturtle()
+winner_b.goto(200, 0)
+winner_b.write("    ", align="center",
+               font=("Arial", 40, "bold"))
+
 
 # Function
 
@@ -115,8 +141,8 @@ while True:
         ball.dx *= -1
         score_a += 1
         score_m.clear()
-        score_m.write("Player A: {}   Player B: {}".format(score_a, score_b), align="center",
-                      font=("Arial", 15, "normal"))
+        score_m.write("{}    {}".format(score_a, score_b), align="center",
+                      font=("Arial", 20, "normal"))
         winsound.PlaySound("point.wav", winsound.SND_ASYNC)
 
     if ball.xcor() < -390:
@@ -124,8 +150,8 @@ while True:
         ball.dx *= -1
         score_b += 1
         score_m.clear()
-        score_m.write("Player A: {}   Player B: {}".format(score_a, score_b), align="center",
-                      font=("Arial", 15, "normal"))
+        score_m.write("{}    {}".format(score_a, score_b), align="center",
+                      font=("Arial", 20, "normal"))
         winsound.PlaySound("point.wav", winsound.SND_ASYNC)
 
     # Ball colisions
@@ -138,3 +164,17 @@ while True:
         ball.setx(-340)
         ball.dx *= -1
         winsound.PlaySound("bounce.wav", winsound.SND_ASYNC)
+
+    # Winner
+    if score_a == 2:
+        winner_a.write("RED WON!", align="center", font=("Arial", 40, "bold"))
+        time.sleep(3)
+        set_a += 1
+        break
+
+    if score_b == 2:
+        winner_b.write("GREEN WON!", align="center",
+                       font=("Arial", 40, "bold"))
+        set_b += 1
+        time.sleep(3)
+        break

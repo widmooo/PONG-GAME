@@ -92,26 +92,42 @@ paused_txt.goto(0, 0)
 # Function
 def player_a_up():
     y = player_a.ycor()
-    y += 20
-    player_a.sety(y)
+    if player_a.ycor() > 220 or paused == True:
+        y += 0
+        player_a.sety(y)
+    else:
+        y += 10
+        player_a.sety(y)
 
 
 def player_a_down():
     y = player_a.ycor()
-    y -= 20
-    player_a.sety(y)
+    if player_a.ycor() < -220 or paused == True:
+        y += 0
+        player_a.sety(y)
+    else:
+        y -= 10
+        player_a.sety(y)
 
 
 def player_b_up():
     y = player_b.ycor()
-    y += 20
-    player_b.sety(y)
+    if player_b.ycor() > 220 or paused == True:
+        y += 0
+        player_b.sety(y)
+    else:
+        y += 10
+        player_b.sety(y)
 
 
 def player_b_down():
     y = player_b.ycor()
-    y -= 20
-    player_b.sety(y)
+    if player_b.ycor() < -220 or paused == True:
+        y += 0
+        player_b.sety(y)
+    else:
+        y -= 10
+        player_b.sety(y)
 
 
 def pause_f():

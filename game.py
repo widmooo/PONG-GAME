@@ -10,7 +10,7 @@ import time
 
 wn = turtle.Screen()
 wn.title("Pong Game v1.0 (by widmooo)")
-wn.bgpic('bcg.gif')
+wn.bgpic('graphic/bcg.gif')
 wn.setup(width=800, height=600)
 wn.tracer(0)  # make game moves faster
 
@@ -20,8 +20,8 @@ score_a = 0
 score_b = 0
 
 # Set Score
-set_a = 0
-set_b = 0
+# set_a = 0
+# set_b = 0
 
 # Player A
 player_a = turtle.Turtle()
@@ -59,8 +59,7 @@ score_m.color("White")
 score_m.penup()
 score_m.hideturtle()
 score_m.goto(0, 250)
-score_m.write("0    0", align="center",
-              font=("Arial", 20, "normal"))
+score_m.write("0    0", align="center", font=("Arial", 20, "normal"))
 
 # Winner A
 winner_a = turtle.Turtle()
@@ -68,9 +67,8 @@ winner_a.speed(0)
 winner_a.color("#ca3b32")
 winner_a.penup()
 winner_a.hideturtle()
-winner_a.goto(-200, 0)
-winner_a.write("    ", align="center",
-               font=("Arial", 40, "bold"))
+winner_a.goto(-180, 0)
+winner_a.write("    ", align="center", font=("Arial", 40, "bold"))
 
 # Winner B
 winner_b = turtle.Turtle()
@@ -78,14 +76,20 @@ winner_b.speed(0)
 winner_b.color("#38393b")
 winner_b.penup()
 winner_b.hideturtle()
-winner_b.goto(200, 0)
-winner_b.write("    ", align="center",
-               font=("Arial", 40, "bold"))
+winner_b.goto(180, 0)
+winner_b.write("    ", align="center", font=("Arial", 40, "bold"))
+
+# Pause
+paused = False
+paused_txt = turtle.Turtle()
+paused_txt.speed(0)
+paused_txt.color("red")
+paused_txt.penup()
+paused_txt.hideturtle()
+paused_txt.goto(0, 0)
 
 
 # Function
-
-
 def player_a_up():
     y = player_a.ycor()
     y += 20
@@ -110,71 +114,94 @@ def player_b_down():
     player_b.sety(y)
 
 
+def pause_f():
+    global paused
+    if paused == True:
+        paused = False
+        paused_txt.clear()
+    else:
+        paused = True
+        paused_txt.write("PAUSE", align="center", font=("Arial", 70, "bold"))
+
+
 # Bind
 wn.listen()
 wn.onkeypress(player_a_up, 'w')
 wn.onkeypress(player_a_down, 's')
 wn.onkeypress(player_b_up, 'Up')
 wn.onkeypress(player_b_down, 'Down')
+wn.onkeypress(pause_f, 'space')
 
 # Game loop
 while True:
-    wn.update()
+    if not paused:
+        wn.update()
 
-    # Ball moving
-    ball.setx(ball.xcor() + ball.dx)
-    ball.sety(ball.ycor() + ball.dy)
+        # Ball moving
+        ball.setx(ball.xcor() + ball.dx)
+        ball.sety(ball.ycor() + ball.dy)
 
-    # Court checking
-    if ball.ycor() > 290:
-        ball.sety(290)
-        ball.dy *= -1
-        winsound.PlaySound("bounce.wav", winsound.SND_ASYNC)
+        # Court checking
+        if ball.ycor() > 290:
+            ball.sety(290)
+            ball.dy *= -1
+            winsound.PlaySound("sound/bounce.wav", winsound.SND_ASYNC)
 
-    if ball.ycor() < -290:
-        ball.sety(-290)
-        ball.dy *= -1
-        winsound.PlaySound("bounce.wav", winsound.SND_ASYNC)
+        if ball.ycor() < -290:
+            ball.sety(-290)
+            ball.dy *= -1
+            winsound.PlaySound("sound/bounce.wav", winsound.SND_ASYNC)
 
-    if ball.xcor() > 390:
-        ball.goto(0, 0)
-        ball.dx *= -1
-        score_a += 1
-        score_m.clear()
-        score_m.write("{}    {}".format(score_a, score_b), align="center",
-                      font=("Arial", 20, "normal"))
-        winsound.PlaySound("point.wav", winsound.SND_ASYNC)
+        if ball.xcor() > 390:
+            ball.goto(0, 0)
+            ball.dx *= -1
+            score_a += 1
+            score_m.clear()
+            score_m.write("{}    {}".format(score_a, score_b),
+                          align="center", font=("Arial", 20, "normal"))
+            winsound.PlaySound("sound/point.wav", winsound.SND_ASYNC)
 
-    if ball.xcor() < -390:
-        ball.goto(0, 0)
-        ball.dx *= -1
-        score_b += 1
-        score_m.clear()
-        score_m.write("{}    {}".format(score_a, score_b), align="center",
-                      font=("Arial", 20, "normal"))
-        winsound.PlaySound("point.wav", winsound.SND_ASYNC)
+        if ball.xcor() < -390:
+            ball.goto(0, 0)
+            ball.dx *= -1
+            score_b += 1
+            score_m.clear()
+            score_m.write("{}    {}".format(score_a, score_b),
+                          align="center", font=("Arial", 20, "normal"))
+            winsound.PlaySound("sound/point.wav", winsound.SND_ASYNC)
 
-    # Ball colisions
-    if (ball.xcor() > 340 and ball.xcor() < 360) and (ball.ycor() < player_b.ycor() + 50 and ball.ycor() > player_b.ycor() - 50):
-        ball.setx(340)
-        ball.dx *= -1
-        winsound.PlaySound("bounce.wav", winsound.SND_ASYNC)
+        # Ball colisions
+        if (ball.xcor() > 340 and ball.xcor() < 360) and (ball.ycor() < player_b.ycor() + 50 and ball.ycor() > player_b.ycor() - 50):
+            ball.setx(340)
+            ball.dx *= -1
+            winsound.PlaySound("sound/bounce.wav", winsound.SND_ASYNC)
 
-    if (ball.xcor() < -340 and ball.xcor() > -360) and (ball.ycor() < player_a.ycor() + 50 and ball.ycor() > player_a.ycor() - 50):
-        ball.setx(-340)
-        ball.dx *= -1
-        winsound.PlaySound("bounce.wav", winsound.SND_ASYNC)
+        if (ball.xcor() < -340 and ball.xcor() > -360) and (ball.ycor() < player_a.ycor() + 50 and ball.ycor() > player_a.ycor() - 50):
+            ball.setx(-340)
+            ball.dx *= -1
+            winsound.PlaySound("sound/bounce.wav", winsound.SND_ASYNC)
 
-    # Winner
-    if score_a == 2:
-        winner_a.write("RED WON!", align="center", font=("Arial", 40, "bold"))
-        time.sleep(3)
-        set_a += 1
-        break
+        # Win (Later change to set mode)
+        if score_a == 2:
+            winner_a.write("RED WON!", align="center",
+                           font=("Arial", 40, "bold"))
+            time.sleep(3)
+            # set_a += 1
+            score_a == 0
+            score_m.clear()
+            score_m.write("0    0", align="center",
+                          font=("Arial", 20, "normal"))
+            winner_a.clear()
 
-    if score_b == 2:
-        winner_b.write("GREEN WON!", align="center",
-                       font=("Arial", 40, "bold"))
-        set_b += 1
-        time.sleep(3)
-        break
+        if score_b == 2:
+            winner_b.write("GREEN WON!", align="center",
+                           font=("Arial", 40, "bold"))
+            # set_b += 1
+            time.sleep(3)
+            score_b == 0
+            score_m.clear()
+            score_m.write("0    0", align="center",
+                          font=("Arial", 20, "normal"))
+            winner_b.clear()
+    else:
+        wn.update()  # do nothing else is paused

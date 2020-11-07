@@ -140,6 +140,28 @@ def pause_f():
         paused_txt.write("PAUSE", align="center", font=("Arial", 70, "bold"))
 
 
+def win_func():
+    if score_a == 2:
+        winner_a.write("RED WON!", align="center", font=("Arial", 40, "bold"))
+        winsound.PlaySound("sound/win1.wav", winsound.SND_ASYNC)
+        time.sleep(3)
+        score_a == 0
+        score_m.clear()
+        score_m.write("0    0", align="center", font=("Arial", 20, "normal"))
+        winner_a.clear()
+        paused = False
+
+    if score_b == 2:
+        winner_b.write("GREEN WON!", align="center",
+                       font=("Arial", 40, "bold"))
+        winsound.PlaySound("sound/win1.wav", winsound.SND_ASYNC)
+        score_b == 0
+        score_m.clear()
+        score_m.write("0    0", align="center", font=("Arial", 20, "normal"))
+        winner_b.clear()
+        paused = False
+
+
 # Bind
 wn.listen()
 wn.onkeypress(player_a_up, 'w')
@@ -152,6 +174,7 @@ wn.onkeypress(pause_f, 'space')
 while True:
     if not paused:
         wn.update()
+        win_func()
 
         # Ball moving
         ball.setx(ball.xcor() + ball.dx)
@@ -197,27 +220,5 @@ while True:
             ball.dx *= -1
             winsound.PlaySound("sound/bounce.wav", winsound.SND_ASYNC)
 
-        # Win (Later change to set mode)
-        if score_a == 2:
-            winner_a.write("RED WON!", align="center",
-                           font=("Arial", 40, "bold"))
-            time.sleep(3)
-            # set_a += 1
-            score_a == 0
-            score_m.clear()
-            score_m.write("0    0", align="center",
-                          font=("Arial", 20, "normal"))
-            winner_a.clear()
-
-        if score_b == 2:
-            winner_b.write("GREEN WON!", align="center",
-                           font=("Arial", 40, "bold"))
-            # set_b += 1
-            time.sleep(3)
-            score_b == 0
-            score_m.clear()
-            score_m.write("0    0", align="center",
-                          font=("Arial", 20, "normal"))
-            winner_b.clear()
     else:
-        wn.update()  # do nothing else is paused
+        wn.update()  # do nothing else paused is True

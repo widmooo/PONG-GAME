@@ -218,6 +218,6 @@ while True:
             ball.setx(-340)
             ball.dx *= -1
             winsound.PlaySound("sound/bounce.wav", winsound.SND_ASYNC)
-
+            
     else:
         wn.update()  # do nothing else paused is True
